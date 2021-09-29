@@ -1,4 +1,4 @@
-const testimonial = require('../models/testimonial').Testimonial;
+const testimonial = require('../models').Testimonial;
 
 module.exports = {
     async create(body) {

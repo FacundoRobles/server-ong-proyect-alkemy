@@ -9,21 +9,19 @@ module.exports = {
                     message:'Please complete all required fields'
                 });
             }
-            const newTestimonial = testimonial.create(req.body);
-            const response = {
+            const newTestimonial = await testimonial.create(req.body);
+            return res.status(201).send({
                 success: true,
                 data: {
                     testimonials: newTestimonial
                 }
-            };
-            return res.status(201).send(response);
+            });
         } catch(err){
             console.log(err.message);
-            const response = {
+            return res.status(400).send({
                 success: false,
                 message: err.message
-            }
-            return res.status(400).send(response);
+            });
         }
     }
 }

@@ -12,5 +12,8 @@ module.exports = {
     },
     async fetchOne(id){
         return await testimonial.findByPk(id);
+    },
+    async update(body, testimonialToUpdate){
+        return await testimonialToUpdate.update(body);
     }
 }

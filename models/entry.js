@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: {
           msg: 'Please enter a name'
+        },
+        notEmpty: {
+          msg: 'Please enter a name'
         }
       }
     },
@@ -23,6 +26,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notNull: {
+          msg: 'Please enter the content'
+        },
+        notEmpty: {
           msg: 'Please enter the content'
         }
       }
@@ -33,6 +39,9 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: {
           msg: 'Please enter the image URL'
+        },
+        notEmpty: {
+          msg: 'Please enter the image URL'
         }
       }
     },
@@ -41,6 +50,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notNull: {
+          msg: 'Category must be setted'
+        },
+        notEmpty: {
           msg: 'Category must be setted'
         }
       }
@@ -51,10 +63,17 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: {
           msg: 'Please enter the type'
+        },
+        notEmpty: {
+          msg: 'Please enter the type'
         }
       }
     },
-    deletedAt: DataTypes.DATE
+    deletedAt: DataTypes.DATE,
+    deleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   }, {
     sequelize,
     modelName: 'Entry',

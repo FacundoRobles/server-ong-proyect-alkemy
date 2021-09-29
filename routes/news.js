@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { saveOne, fetchNews } = require('../controllers/newsController');
+const { saveOne, fetchNews, deleteOne } = require('../controllers/newsController');
 
 router.route('/')
       .get(fetchNews)
@@ -10,5 +10,6 @@ router.route('/')
 
 router.route('/:id')
       .get(fetchNews)
+      .delete(deleteOne)
 
 module.exports = router;

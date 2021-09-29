@@ -1,35 +1,19 @@
 'use strict';
+const { times } = require("lodash");
+
+const entries = times(5,(i) =>({
+  name: `Novedad${i}`,
+  content: `semilla ${i}`,
+  image: `www.image${i}.com`,
+  categoryId: 1,
+  type: 'news',
+  createdAt: new Date,
+  updatedAt: new Date
+}))
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Entries', [
-      {
-        name: 'Novedad1',
-        content: 'Primera semilla',
-        image: 'www.image.com',
-        categoryId: 1,
-        type: 'news',
-        createdAt: new Date,
-        updatedAt: new Date
-      },
-      {
-        name: 'Novedad2',
-        content: 'Segunda semilla',
-        image: 'www.image2.com',
-        categoryId: 2,
-        type: 'event',
-        createdAt: new Date,
-        updatedAt: new Date
-      },
-      {
-        name: 'Novedad3',
-        content: 'Tercera semilla',
-        image: 'www.image3.com',
-        categoryId: 1,
-        type: 'news',
-        createdAt: new Date,
-        updatedAt: new Date
-      }], {});
+    await queryInterface.bulkInsert('Entries', entries, {});
   },
 
   down: async (queryInterface, Sequelize) => {

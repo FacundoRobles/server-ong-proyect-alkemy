@@ -18,20 +18,19 @@ const createCategory = async (name,description) => {
 const updateCategory = async (idCategory,name,description) => {
     return await Category.findByPk(idCategory)
     .then(async(category) => {
-        if(category){
-            if(name){
-                category.name = name
-            }
-            if(description){
-                category.description = description
-            }
-            await category.save()
-            return category
-        }else{
-            return 'this category dont exists'
+        if(category !== null){
+            await Category.update({
+                name,
+                description
+            },{
+                where:{
+                    id: idCategory
+                }
+            })
+           return category 
         }
+        return 
     })
-    .catch(err => err)
 }
 
 module.exports = {

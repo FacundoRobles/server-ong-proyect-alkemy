@@ -13,20 +13,13 @@ module.exports = {
     newCategory : async(name,description) => {
         return await createCategory(name,description)
         .then(created => created)
+    },
+    updateOne: async(idCategory,name,description) => {
+       return await updateCategory(idCategory,name,description)
+       .then(category => {
+           if(category){
+               return category
+           }
+       })
     }
-}
-
-module.exports.updateOne = async(req,res) => {
-    const {idCategory} = req.params
-    const {name,description} = req.body
-
-    updateCategory(idCategory,name,description)
-    .then(updated => {
-        if(typeof(updated) !== 'string'){
-            res.status(201).json(updated)
-        }else{
-            res.status(401).send(updated)
-        }
-    })
-    .catch(err => res.status(401).send(err.message))
 }

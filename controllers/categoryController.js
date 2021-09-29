@@ -1,17 +1,16 @@
-const { getAll,createCategory }  = require('../services/categoryServices')
+const { allCategories,createCategory }  = require('../services/categoryServices')
 
 module.exports = {
-    getAllCategories : async() => {
-        let names = []
-        await getAll()
-        .then(categories => {
-            categories.forEach(element => names.push(element.name))
-        })
-
-        return names
+    getCategories : async() => {
+        return await allCategories()
+        .then(categories => categories)
     },
     newCategory : async(name,description) => {
-        return await createCategory(name,description)
-        .then(created => created)
+        if(name && typeof(name) === 'string'){
+            return await createCategory(name,description)
+            .then(created => created)
+        }
+
+        return 'camp name should type string'
     }
 }

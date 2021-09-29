@@ -1,4 +1,4 @@
-const { getAll,createCategory }  = require('../services/categoryServices')
+const { getAll,createCategory,updateCategory }  = require('../services/categoryServices')
 
 module.exports = {
     getAllCategories : async() => {
@@ -14,4 +14,19 @@ module.exports = {
         return await createCategory(name,description)
         .then(created => created)
     }
+}
+
+module.exports.updateOne = async(req,res) => {
+    const {idCategory} = req.params
+    const {name,description} = req.body
+
+    updateCategory(idCategory,name,description)
+    .then(updated => {
+        if(typeof(updated) !== 'string'){
+            res.status(201).json(updated)
+        }else{
+            res.status(401).send(updated)
+        }
+    })
+    .catch(err => res.status(401).send(err.message))
 }

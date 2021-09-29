@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { getAllCategories,newCategory } = require('../controllers/categoryController')
+const { getAllCategories,newCategory, updateOne } = require('../controllers/categoryController')
 
 router.get('/', (req, res, next) => {
     getAllCategories()
@@ -20,5 +20,7 @@ router.post('/', (req, res, next) => {
         res.status(401).send('name should be existing and string')
     }
 });
+
+router.put('/:idCategory', updateOne)
 
 module.exports = router;

@@ -15,13 +15,14 @@ module.exports.saveOne = async (req, res, next) => {
 
 module.exports.fetchAll = async (req, res, next) => {
     try {
-        const filters = {
+        let filters = {
             attributes: ['name', 'image', 'createdAt'],
             where: { type: 'news' },
         };
-        if (req.query.id)
-            filters.where = { ...filters.where, id: req.query.id };
-
+        
+        if (req.params.id)
+            filters = { where: { ...filters.where, id: req.params.id }};
+            console.log(filters);
         const entries = await findAll(filters);
         entries.length === 0
             ? res.status(401).send('News not found')

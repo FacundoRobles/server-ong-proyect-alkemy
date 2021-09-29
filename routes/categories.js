@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const { getAllCategories } = require('../controllers/categoryController')
+const { getCategories } = require('../controllers/categoryController')
 
 router.get('/', (req, res, next) => {
-    getAllCategories()
-    .then(test => res.status(201).json(test))
+    getCategories()
+    .then(categories => res.status(201).json(categories))
     .catch(err => res.status(401).send(err.message))
 });
 

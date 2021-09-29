@@ -1,13 +1,8 @@
-const { getAll }  = require('../services/categoryServices')
+const { allCategories }  = require('../services/categoryServices')
 
 module.exports = {
-    getAllCategories : async() => {
-        let names = []
-        await getAll()
-        .then(categories => {
-            categories.forEach(element => names.push(element.name))
-        })
-
-        return names
+    getCategories : async() => {
+        return await allCategories()
+        .then(categories => categories)
     }
 }

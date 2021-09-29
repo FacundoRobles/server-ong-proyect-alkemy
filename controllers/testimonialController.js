@@ -4,13 +4,26 @@ module.exports = {
     async createTestimonial(req, res) {
         try {
             if(!req.body.name || !req.body.content){
-                res.status(400).send('Please complete all required fields');
+                res.status(400).send({
+                    success: false,
+                    message:'Please complete all required fields'
+                });
             }
             const newTestimonial = testimonial.create(req.body);
-            return res.status(201).send(newTransaction);
+            const response = {
+                success: true,
+                data: {
+                    testimonials: newTestimonial
+                }
+            };
+            return res.status(201).send(response);
         } catch(err){
             console.log(err.message);
-            return res.status(400).send(err);
+            const response = {
+                success: false,
+                message: err.message
+            }
+            return res.status(400).send(response);
         }
     }
 }

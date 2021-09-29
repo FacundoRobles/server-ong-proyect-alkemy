@@ -1,20 +1,19 @@
-const { getAll,createCategory,updateCategory }  = require('../services/categoryServices')
+const { allCategories,createCategory,updateCategory }  = require('../services/categoryServices')
 
 module.exports = {
-    getAllCategories : async() => {
-        let names = []
-        await getAll()
-        .then(categories => {
-            categories.forEach(element => names.push(element.name))
-        })
-
-        return names
+    getCategories : async() => {
+        return await allCategories()
+        .then(categories => categories)
     },
     newCategory : async(name,description) => {
-        return await createCategory(name,description)
-        .then(created => created)
+        if(name && typeof(name) === 'string'){
+            return await createCategory(name,description)
+            .then(created => created)
+        }
+
+        return 'camp name should type string'
     },
-    updateOne: async(idCategory,name,description) => {
+    updateOne : async(idCategory,name,description) => {
        return await updateCategory(idCategory,name,description)
        .then(category => {
            if(category){

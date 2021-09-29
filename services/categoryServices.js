@@ -1,9 +1,8 @@
 const { Category }  = require('../models/index')
 
-const getAll = async () => {
-    return await Category.findAll()
+const allCategories = async () => {
+    return await Category.findAll({raw: true})
     .then(categories => categories)
-    .catch(err => err)
 }
 
 const createCategory = async (name,description) => {
@@ -12,7 +11,6 @@ const createCategory = async (name,description) => {
         description
     })
     .then(category => category)
-    .catch(err => err)
 }
 
 const updateCategory = async (idCategory,name,description) => {
@@ -34,7 +32,7 @@ const updateCategory = async (idCategory,name,description) => {
 }
 
 module.exports = {
-    getAll,
+    allCategories,
     createCategory,
     updateCategory
 }

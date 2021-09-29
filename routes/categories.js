@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const { getAllCategories,newCategory, updateOne } = require('../controllers/categoryController')
+const { getCategories,newCategory, updateOne } = require('../controllers/categoryController')
 
 router.get('/', (req, res, next) => {
-    getAllCategories()
+    getCategories()
     .then(categories => res.status(201).json(categories))
     .catch(err => res.status(401).send(err.message))
 });
@@ -12,13 +12,14 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
     const {name,description} = req.body
 
-    if(name && typeof(name) === 'string'){
-        newCategory(name,description)
-        .then(category => res.status(201).json(category))
-        .catch(err => res.status(401).send(err.message))  
-    }else{
-        res.status(401).send('name should be existing and string')
-    }
+    newCategory(name,description)
+    .then(category => {
+        if(typeof(category) !== 'string'){
+            return res.status(201).json(category)
+        }
+        
+        res.status(401).send(category)
+    })
 });
 
 router.put('/:idCategory', (req, res, next) => {

@@ -9,11 +9,51 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Entry.init({
-    name: DataTypes.STRING,
-    content: DataTypes.STRING,
-    image: DataTypes.STRING,
-    categoryId: DataTypes.INTEGER,
-    type: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please enter a name'
+        }
+      }
+    },
+    content: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please enter the content'
+        }
+      }
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please enter the image URL'
+        }
+      }
+    },
+    categoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Category must be setted'
+        }
+      }
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please enter the type'
+        }
+      }
+    },
     deletedAt: DataTypes.DATE
   }, {
     sequelize,

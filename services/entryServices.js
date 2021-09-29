@@ -2,6 +2,6 @@
 
 const { Entry } = require('../models/index');
 
-module.exports.saveOne = (params, object ) => {
-        return Entry.create(object);
-}
+module.exports.saveOne = (params, object) => {
+    return Entry.create(object);
+};

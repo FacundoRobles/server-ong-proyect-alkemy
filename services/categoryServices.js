@@ -6,6 +6,16 @@ const getAll = async () => {
     .catch(err => err)
 }
 
+const createCategory = async (name,description) => {
+    return await Category.create({
+        name,
+        description
+    })
+    .then(category => category)
+    .catch(err => err)
+}
+
 module.exports = {
-    getAll
+    getAll,
+    createCategory
 }

@@ -1,4 +1,4 @@
-const { getAll }  = require('../services/categoryServices')
+const { getAll,createCategory }  = require('../services/categoryServices')
 
 module.exports = {
     getAllCategories : async() => {
@@ -9,5 +9,9 @@ module.exports = {
         })
 
         return names
+    },
+    newCategory : async(name,description) => {
+        return await createCategory(name,description)
+        .then(created => created)
     }
 }

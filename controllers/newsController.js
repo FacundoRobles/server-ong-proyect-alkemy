@@ -1,6 +1,6 @@
 'use strict';
 
-const { saveOne } = require('../services/entryServices');
+const { saveOne, findAll } = require('../services/entryServices');
 
 module.exports.saveOne = async (req, res, next) => {
     try {
@@ -8,6 +8,24 @@ module.exports.saveOne = async (req, res, next) => {
         return await saveOne(req.params, req.body)
             .then(_ => res.status(200).send('Succesfully Created'))
             .catch(err => res.send(err.errors[0].message));
+    } catch (err) {
+        next(err);
+    }
+};
+
+module.exports.fetchAll = async (req, res, next) => {
+    try {
+        const filters = {
+            attributes: ['name', 'image', 'createdAt'],
+            where: { type: 'news' },
+        };
+        if (req.query.id)
+            filters.where = { ...filters.where, id: req.query.id };
+
+        const entries = await findAll(filters);
+        entries.length === 0
+            ? res.status(401).send('News not found')
+            : res.status(200).send(entries);
     } catch (err) {
         next(err);
     }

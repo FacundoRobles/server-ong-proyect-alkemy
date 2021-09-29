@@ -2,8 +2,10 @@
 
 const express = require('express');
 const router = express.Router();
-const { saveOne } = require('../controllers/newsController');
+const { saveOne, fetchAll } = require('../controllers/newsController');
 
-router.post('/', saveOne);
+router.route('/')
+      .get(fetchAll)
+      .post(saveOne);
 
 module.exports = router;

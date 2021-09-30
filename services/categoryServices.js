@@ -1,4 +1,5 @@
 const { Category }  = require('../models/index')
+const { isEmpty, isString, isBoolean } = require('lodash')
 
 const allCategories = async () => {
     return await Category.findAll({raw: true})
@@ -13,19 +14,38 @@ const createCategory = async (name,description) => {
     .then(category => category)
 }
 
-const updateCategory = async (idCategory,name,description) => {
+const updateCategory = async (idCategory,fields) => {
+    let string = isString(fields.first)
+    let boolean = isBoolean(fields.first)
+
     return await Category.findByPk(idCategory)
     .then(async(category) => {
-        if(category !== null){
-            await Category.update({
-                name,
-                description
-            },{
-                where:{
-                    id: idCategory
-                }
-            })
-           return category 
+        let empty = isEmpty(category)
+
+        if(!empty){
+            if(string){
+                await Category.update({
+                    name: fields.first,
+                    description: fields.second
+                },{
+                    where:{
+                        id: idCategory
+                    }
+                })
+                return category 
+            }
+            
+            if(boolean){
+                await Category.update({
+                    deleted: fields.first,
+                    deletedAt: new Date()
+                },{
+                    where:{
+                        id: idCategory
+                    }
+                })
+                return category 
+            }
         }
         return 
     })

@@ -1,4 +1,5 @@
 const { allCategories,createCategory,updateCategory }  = require('../services/categoryServices')
+const { isEmpty, isString } = require('lodash')
 
 module.exports = {
     getCategories : async() => {
@@ -6,15 +7,16 @@ module.exports = {
         .then(categories => categories)
     },
     newCategory : async(name,description) => {
-        if(name && typeof(name) === 'string'){
+        let empty = isEmpty(name)
+        let string = isString(name)
+
+        if(!empty && string){
             return await createCategory(name,description)
             .then(created => created)
         }
-
-        return 'camp name should type string'
     },
-    updateOne : async(idCategory,name,description) => {
-       return await updateCategory(idCategory,name,description)
+    updateOne : async(idCategory,fields) => {
+       return await updateCategory(idCategory,fields)
        .then(category => {
            if(category){
                return category

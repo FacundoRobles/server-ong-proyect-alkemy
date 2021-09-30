@@ -5,8 +5,14 @@ const { getCategories,newCategory, updateOne } = require('../controllers/categor
 
 router.get('/', (req, res, next) => {
     getCategories()
-    .then(categories => res.status(201).json(categories))
-    .catch(err => res.status(401).send(err.message))
+    .then(categories => res.status(201).send({
+        success: true,
+        data: categories
+    }))
+    .catch(err => res.status(401).send({
+        success: false,
+        data: err.message
+    }))
 });
 
 router.post('/', (req, res, next) => {
@@ -14,24 +20,41 @@ router.post('/', (req, res, next) => {
 
     newCategory(name,description)
     .then(category => {
-        if(typeof(category) !== 'string'){
-            return res.status(201).json(category)
+        if(category){
+            return res.status(201).send({
+                success: true,
+                data: category
+            })
         }
         
-        res.status(401).send(category)
+        res.status(401).send({
+            success: false,
+            data: 'the name field should not be empty and be of type string'
+        })
     })
 });
 
 router.put('/:idCategory', (req, res, next) => {
     const { idCategory } = req.params
-    const { name,description } = req.body
+    const { name,description,deleted } = req.body
 
-    updateOne(idCategory,name,description)
+    let request = {
+        first: name ? name : deleted,
+        second: description
+    }   
+
+    updateOne(idCategory,request)
     .then(updated => {
         if(updated){
-            return res.status(201).json(`category ${idCategory} modified`)
+            return res.status(201).send({
+                success: true,
+                data: `category ${idCategory} modified`
+            })
         }
-        res.status(401).send(`sorry dont finded category ${idCategory}`)
+        res.status(401).send({
+            success: false,
+            data: `sorry dont finded category ${idCategory}`
+        })
     })
 })
 

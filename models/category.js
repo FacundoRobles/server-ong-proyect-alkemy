@@ -9,7 +9,11 @@ module.exports = (sequelize, DataTypes) => {
   Category.init({
     name: DataTypes.STRING,
     description: DataTypes.STRING,
-    deletedAt: DataTypes.DATE
+    deletedAt: DataTypes.DATE,
+    deleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   }, {
     sequelize,
     modelName: 'Category',

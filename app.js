@@ -11,6 +11,7 @@ const usersRouter = require('./routes/users');
 
 const newsRouter = require('./routes/news');
 
+const categoriesRouter = require('./routes/categories');
 const testimonialsRouter = require('./routes/testimonials');
 
 const app = express();
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/news', newsRouter);
+app.use('/categories', categoriesRouter);
 app.use('/testimonials', testimonialsRouter);
 
 app.use(function(req, res, next) {

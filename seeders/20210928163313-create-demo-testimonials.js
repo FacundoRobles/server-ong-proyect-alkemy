@@ -10,6 +10,7 @@ const testTestimonials = times(4, (i) => ({
   updatedAt: new Date,
   deletedAt: null
 }))
+
 module.exports = {
   
   up: async (queryInterface, Sequelize) => {

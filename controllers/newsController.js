@@ -34,7 +34,7 @@ module.exports.fetchNews = async (req, res, next) => {
         if (entries) {
             return res.status(200).send({
                 success: true,
-                data: { entries },
+                data:  entries ,
             });
         }
         return res.status(401).send({
@@ -52,7 +52,7 @@ module.exports.deleteOne = async (req, res, next) => {
         if (result) {
             return res.status(200).send({
                 success: true,
-                data: `${result.dataValues.name} Deleted`
+                data: result
             });
         }
         return res.status(401).send({

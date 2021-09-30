@@ -7,10 +7,7 @@ module.exports = {
         .then(categories => categories)
     },
     newCategory : async(name,description) => {
-        let empty = isEmpty(name)
-        let string = isString(name)
-
-        if(!empty && string){
+        if(!isEmpty(name) && isString(name)){
             return await createCategory(name,description)
             .then(created => created)
         }

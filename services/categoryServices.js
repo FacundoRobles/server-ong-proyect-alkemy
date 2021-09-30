@@ -15,15 +15,12 @@ const createCategory = async (name,description) => {
 }
 
 const updateCategory = async (idCategory,fields) => {
-    let string = isString(fields.first)
-    let boolean = isBoolean(fields.first)
 
     return await Category.findByPk(idCategory)
     .then(async(category) => {
-        let empty = isEmpty(category)
 
-        if(!empty){
-            if(string){
+        if(!isEmpty(category)){
+            if(isString(fields.first)){
                 await Category.update({
                     name: fields.first,
                     description: fields.second
@@ -35,7 +32,7 @@ const updateCategory = async (idCategory,fields) => {
                 return category 
             }
             
-            if(boolean){
+            if(isBoolean(fields.first)){
                 await Category.update({
                     deleted: fields.first,
                     deletedAt: new Date()

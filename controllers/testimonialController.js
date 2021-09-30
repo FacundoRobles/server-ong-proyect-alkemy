@@ -99,31 +99,5 @@ module.exports = {
             });
 
         }
-    },
-    async updateTestimonial(req, res) {
-        try {
-            const testimonialToUpdate = await testimonial.fetchOne(req.params.id);
-            if(testimonialToUpdate){
-                const updatedTestimonial = await testimonial.update(req.body, testimonialToUpdate);
-                return res.status(204).send({
-                    success: true,
-                    data: {
-                        testimonials: updatedTestimonial
-                    }
-                });
-            } else{
-            return res.status(404).send({
-                success: false,
-                message: 'Testimonial to update not found'
-            });
-        }
-        } catch(err){
-            console.log(err.message);
-            return res.status(400).send({
-                success: false,
-                message: err.message
-            });
-
-        }
     }
 }

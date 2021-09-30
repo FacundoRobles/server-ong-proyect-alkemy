@@ -8,7 +8,7 @@ module.exports.saveOne = async (params, object) => {
         return await Entry.create(object);
     }
     const { id } = params;
-    const entry = await Entry.findByPk(id);
+    const entry = await Entry.findOne({ where: { id , deleted: false} });
     if (!entry) {
         throw Error();
     }

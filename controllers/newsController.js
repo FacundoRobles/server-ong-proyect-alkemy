@@ -1,18 +1,19 @@
 'use strict';
 
+const { get } = require('lodash');
 const { saveOne, find, deleteOne } = require('../services/entryServices');
 
 module.exports.saveOne = async (req, res, next) => {
     try {
         req.body.type = 'news';
         await saveOne(req.params, req.body)
-            .then(_ => res.status(200).send({
+            .then(val => res.status(200).send({
                 success: true,
-                data: 'Successfully created'
+                data: val
             }))
             .catch(err => res.send({
                 success: false,
-                message: err.errors[0].message
+                message: get(err, 'errors[0].message', 'Could not update that news')
             }));
     } catch (err) {
         next(err);
@@ -51,7 +52,7 @@ module.exports.deleteOne = async (req, res, next) => {
         if (result) {
             return res.status(200).send({
                 success: true,
-                data: { result },
+                data: `${result.dataValues.name} Deleted`
             });
         }
         return res.status(401).send({

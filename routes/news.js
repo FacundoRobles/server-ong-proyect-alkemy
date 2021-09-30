@@ -11,5 +11,6 @@ router.route('/')
 router.route('/:id')
       .get(fetchNews)
       .delete(deleteOne)
-
+      .put(saveOne);
+      
 module.exports = router;

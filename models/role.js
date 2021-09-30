@@ -2,22 +2,19 @@
 const {
   Model
 } = require('sequelize');
-
 module.exports = (sequelize, DataTypes) => {
-
-  class Activity extends Model {
+  class Role extends Model {
     static associate(models) {
     }
   };
-  
-  Activity.init({
+  Role.init({
     name: DataTypes.STRING,
-    image: DataTypes.STRING,
-    content: DataTypes.STRING,
+    description: DataTypes.STRING,
     deletedAt: DataTypes.DATE
   }, {
     sequelize,
-    modelName: 'Activity',
+    modelName: 'Role',
+    paranoid: true
   });
-  return Activity;
+  return Role;
 };

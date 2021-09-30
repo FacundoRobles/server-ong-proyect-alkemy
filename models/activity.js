@@ -5,7 +5,6 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Activity extends Model {
     static associate(models) {
-      
     }
   };
   Activity.init({

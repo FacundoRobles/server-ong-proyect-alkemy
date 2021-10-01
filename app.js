@@ -13,6 +13,7 @@ const newsRouter = require('./routes/news');
 
 const categoriesRouter = require('./routes/categories');
 const testimonialsRouter = require('./routes/testimonials');
+const contactsRouter = require('./routes/contacts');
 
 const app = express();
 app.use(cors())
@@ -31,6 +32,7 @@ app.use('/users', usersRouter);
 app.use('/news', newsRouter);
 app.use('/categories', categoriesRouter);
 app.use('/testimonials', testimonialsRouter);
+app.use('/contacts', contactsRouter);
 
 app.use(function(req, res, next) {
   next(createError(404));

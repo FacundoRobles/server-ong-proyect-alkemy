@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Slide extends Model {
     static associate(models) {
-      Entry.belongsTo(models.Organization, {as: 'organization'});
+      Slide.belongsTo(models.Organization, {as: 'organization'});
 
     }
   };

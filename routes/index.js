@@ -1,5 +1,5 @@
 const express = require('express');
-const activitiesRoutes = require('./activitiesRoutes');
+const activitiesRoutes = require('./activities');
 const router = express.Router();
 
 router.get('/', function(req, res, next) {

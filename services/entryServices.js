@@ -29,7 +29,7 @@ module.exports.find = async ({ id }, filters, type) => {
             where: { deleted: false, type },
         });
     } catch (err) {
-        console.log({ success: false, data: err });
+        throw Error({ success: false, data: err });
     }
 };
 
@@ -48,6 +48,6 @@ module.exports.deleteOne = async ({ id }) => {
         entry.deleted = true;
         return entry;
     } catch (err) {
-        console.log({ success: false, data: err });
+        throw Error({ success: false, data: err });
     }
 };

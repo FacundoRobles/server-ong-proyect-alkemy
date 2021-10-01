@@ -12,6 +12,6 @@ module.exports.find = async ({ id }, filters) => {
 
         return await Organization.findAll({...filters, where: { deleted: false } });
     } catch (err) {
-        console.log({ success: false, data: err });
+        throw Error({ success: false, data: err });
     }
 };

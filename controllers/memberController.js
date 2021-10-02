@@ -1,4 +1,4 @@
-const { allMembers, createMember, updateMember } = require('../services/memberServices')
+const { allMembers, createMember, updateMember, deleteMember } = require('../services/memberServices')
 
 module.exports = {
     getMembers: async () => {
@@ -13,11 +13,19 @@ module.exports = {
         }
     },
 
-     updateOne: async(idMember,name,image) => {
-        return await updateMember(idMember,name,image)
+    updateOne: async (idMember, name, image) => {
+        return await updateMember(idMember, name, image)
             .then(member => {
-                console.log(member)
-                if (member){
+                if (member) {
+                    return member
+                }
+            })
+    },
+
+    deleteOne: async (idMember) => {
+        return await deleteMember(idMember)
+            .then(member => {
+                if (member) {
                     return member
                 }
             })

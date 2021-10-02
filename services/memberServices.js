@@ -5,6 +5,15 @@ const allMembers = async () => {
     .then(members => members)
 }
 
+const createMember = async (name,imagen) => {
+    return await Member.create({
+        name,
+        imagen
+    })
+    .then(member => member)
+}
+
 module.exports = {
     allMembers,
+    createMember
 }

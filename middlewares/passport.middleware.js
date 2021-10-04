@@ -42,20 +42,24 @@ passport.use(new LocalStrategy({
 ));
 
 var opts = {};
-    opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+    opts.jwtFromRequest = ExtractJwt.fromExtractors([
+      ExtractJwt.fromUrlQueryParameter(SECRET_TOKEN),
+      ExtractJwt.fromHeader(SECRET_TOKEN),
+      ExtractJwt.fromAuthHeaderAsBearerToken()
+    ]);
     opts.secretOrKey = SECRET_TOKEN;
 
 passport.use(new JwtStrategy(opts, async(jwt_payload, done) => {
-    return await User.findByPk(jwt_payload.sub)
-        .then(user => {
-            if (user) return done(null, user);
-        
-            return done(null, false);
-        })
-        .catch(err => {
-            if (err) return done(err, false);
-        });
-    }
+    return await User.findByPk(jwt_payload.user.id)
+    .then(user => {
+        if (user) return done(null, user);
+    
+        return done(null, false);
+    })
+    .catch(err => {
+        if (err) return done(err, false);
+    });
+  }
 ));
 
 passport.serializeUser((user, done) => {

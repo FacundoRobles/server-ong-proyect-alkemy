@@ -5,6 +5,8 @@ const { newUser,validationUserFields,validationLoginFields } = require('../contr
 const { validationResult } = require('express-validator');
 
 const { passport,messageError } = require('../middlewares/passport.middleware');
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken');
 
 const { SECRET_TOKEN } = process.env
@@ -71,6 +73,14 @@ router.post('/login',validationLoginFields,(req, res, next) => {
       });
     })(req, res, next)
 });
+
+router.get('/me', passport.authenticate('jwt', { session: false }),(req, res, next) => {
+
+    res.status(201).send({
+      success: true,
+      data: req.user
+    })
+})
 
 module.exports = router;
 

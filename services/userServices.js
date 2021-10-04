@@ -1,4 +1,4 @@
-const { User } = require('../models/index')
+const { User } = require('../models/index');
 
 const allUsers = async() => {
     try{
@@ -7,9 +7,26 @@ const allUsers = async() => {
     }catch(err){
         return err
     }
-}
+};
+
+const findOneUser = async(idUser) => {
+    return await User.findByPk(idUser);
+};
+
+const logicalDeleteUserService = async(idUser) => {
+    return await User.update({
+        deleted: true,
+        deletedAt: new Date()
+    },{
+        where:{
+            id: idUser
+        }
+    });
+};
 
 
 module.exports = {
-    allUsers
+    allUsers,
+    findOneUser,
+    logicalDeleteUserService
 }

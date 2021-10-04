@@ -3,12 +3,11 @@
 const { isEmpty } = require('lodash');
 const { Entry } = require('../models/index');
 
-module.exports.saveOne = async (params, object) => {
-    if (isEmpty(params)) {
+module.exports.saveOne = async ({ id }, object) => {
+    if (isEmpty(id)) {
         return await Entry.create(object);
     }
-    const { id } = params;
-    const entry = await Entry.findOne({ where: { id , deleted: false} });
+    const entry = await Entry.findOne({ where: { id, deleted: false } });
     if (!entry) {
         throw Error();
     }
@@ -17,15 +16,20 @@ module.exports.saveOne = async (params, object) => {
     return object;
 };
 
-module.exports.find = async filters => {
+module.exports.find = async ({ id }, filters, type) => {
     try {
-        if (filters.where.id) {
-            return await Entry.findOne({ ...filters });
+        if (id) {
+            return await Entry.findOne({
+                where: { id, deleted: false, type },
+            });
         }
 
-        return await Entry.findAll({ ...filters });
+        return await Entry.findAll({
+            ...filters,
+            where: { deleted: false, type },
+        });
     } catch (err) {
-        console.log({ success: false, data: err });
+        throw Error({ success: false, data: err });
     }
 };
 
@@ -39,10 +43,11 @@ module.exports.deleteOne = async ({ id }) => {
                     deleted: true,
                 },
                 { where: { id } }
-                );
+            );
         }
+        entry.deleted = true;
         return entry;
     } catch (err) {
-        console.log({ success: false, data: err });
+        throw Error({ success: false, data: err });
     }
 };

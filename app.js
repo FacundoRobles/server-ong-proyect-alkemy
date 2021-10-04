@@ -16,6 +16,7 @@ const membersRouter = require('./routes/members')
 const categoriesRouter = require('./routes/categories');
 const testimonialsRouter = require('./routes/testimonials');
 const contactsRouter = require('./routes/contacts');
+const organizationsRouter = require('./routes/organizations')
 const activitiesRouter = require('./routes/activities');
 
 const app = express();
@@ -40,6 +41,7 @@ app.use('/members', membersRouter)
 app.use('/categories', categoriesRouter);
 app.use('/testimonials', testimonialsRouter);
 app.use('/contacts', contactsRouter);
+app.use('/organizations', organizationsRouter);
 app.use('/activities', activitiesRouter);
 app.use('/auth', authRouter)
 

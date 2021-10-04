@@ -1,34 +1,33 @@
 'use strict';
-const { times,concat } = require('lodash')
+const bcrypt = require('bcrypt')
 
-const userAdmin = times(10, (i) => ({
-  firstName:`User${i}`,
-  lastName: 'Rich',
-  email: `test${i}@test.com`,
-  password: '1234',
-  roleId: 1,
-  image: 'https://www.designevo.com/res/templates/thumb_small/colorful-hand-and-warm-community.png',
-  createdAt: new Date,
-  updatedAt: new Date
-}));
+const hashed = async (password) => {
+  let saltRounds = 10;
 
-const userStandard = times(10, (i) => ({
-  firstName:`User${i + 10}`,
-  lastName: 'Rich',
-  email: `test${i + 10}@test.com`,
-  password: '1234',
-  roleId: 2,
-  image: 'https://www.designevo.com/res/templates/thumb_small/colorful-hand-and-warm-community.png',
-  deleted: false,
-  createdAt: new Date(),
-  updatedAt: new Date(),
-}));
-
-let users = concat(userAdmin,userStandard)
+  return await bcrypt.hash(password,saltRounds).then(pass => pass)
+}
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Users', users, {});
+    await queryInterface.bulkInsert('Users', [{
+      firstName:`User1`,
+      lastName: 'Rich1',
+      email: `test1@test.com`,
+      password: await hashed(`User2021.L1`),
+      roleId: 1,
+      image: 'https://www.designevo.com/res/templates/thumb_small/colorful-hand-and-warm-community.png',
+      createdAt: new Date(),
+      updatedAt: new Date(), 
+    },{
+      firstName:`User2`,
+      lastName: 'Rich2',
+      email: `test2@test.com`,
+      password: await hashed(`User2.L2021`),
+      roleId: 2,
+      image: 'https://www.designevo.com/res/templates/thumb_small/colorful-hand-and-warm-community.png',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }], {});
   },
 
   down: async (queryInterface, Sequelize) => {

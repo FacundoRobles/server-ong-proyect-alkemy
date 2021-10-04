@@ -5,8 +5,6 @@ const { newUser,validationUserFields,validationLoginFields } = require('../contr
 const { validationResult } = require('express-validator');
 
 const { passport,messageError } = require('../middlewares/passport.middleware');
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken');
 
 const { SECRET_TOKEN } = process.env

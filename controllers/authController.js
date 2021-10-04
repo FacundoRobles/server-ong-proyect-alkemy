@@ -1,6 +1,6 @@
 const { createUser,verifyEmail } = require('../services/authServices')
 const { body } = require('express-validator');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
 

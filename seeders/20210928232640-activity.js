@@ -2,9 +2,9 @@
 const { times } = require('lodash')
 
 const activities = times(3, (i) => ({
-    name: `activities ${i}`,
-    description: `this is a description ${i}`,
-    deleted: false,
+    name: `activities ${i+1}`,
+    image:`http://www.image.com/${i+1}`,
+    content: `this is a description ${i+1}`,
     createdAt: new Date(),
     updatedAt: new Date(),
   }));

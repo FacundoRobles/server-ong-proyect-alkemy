@@ -9,11 +9,33 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
     }
   };
-  
+
   Activity.init({
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please enter a name'
+        },
+        notEmpty: {
+          msg: 'Please enter a name'
+        }
+      }
+    },
     image: DataTypes.STRING,
-    content: DataTypes.STRING,
+    content: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please enter the content'
+        },
+        notEmpty: {
+          msg: 'Please enter the content'
+        }
+      }
+    },
     deletedAt: DataTypes.DATE
   }, {
     sequelize,

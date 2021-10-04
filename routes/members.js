@@ -4,10 +4,16 @@ const router = express.Router();
 const { getMembers, newMember, updateOne } = require('../controllers/memberController');
 
 router.get('/', (req, res, next) => {
+<<<<<<< HEAD
     getMembers()
         .then(members => res.status(201).json(members))
         .catch(err => res.status(401).send(err.message))
     //res.status(201).send('hola')
+=======
+     getMembers()
+    .then(members => res.status(201).json(members))
+    .catch(err => res.status(401).send(err.message))
+>>>>>>> 5114d5db81519788c8d0297e5866ba4fde6801a3
 });
 
 router.post('/', (req, res, next) => {

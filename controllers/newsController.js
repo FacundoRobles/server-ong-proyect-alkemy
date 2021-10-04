@@ -7,14 +7,22 @@ module.exports.saveOne = async (req, res, next) => {
     try {
         req.body.type = 'news';
         await saveOne(req.params, req.body)
-            .then(val => res.status(200).send({
-                success: true,
-                data: val
-            }))
-            .catch(err => res.send({
-                success: false,
-                message: get(err, 'errors[0].message', 'Could not update that news')
-            }));
+            .then(val =>
+                res.status(200).send({
+                    success: true,
+                    data: val,
+                })
+            )
+            .catch(err =>
+                res.send({
+                    success: false,
+                    message: get(
+                        err,
+                        'errors[0].message',
+                        'Could not update that news'
+                    ),
+                })
+            );
     } catch (err) {
         next(err);
     }
@@ -23,18 +31,14 @@ module.exports.saveOne = async (req, res, next) => {
 module.exports.fetchNews = async (req, res, next) => {
     try {
         let filters = {
-            attributes: ['name', 'image', 'createdAt'],
-            where: { type: 'news', deleted: false },
+            attributes: ['name', 'image', 'createdAt']
         };
 
-        if (req.params.id)
-            filters = { where: { ...filters.where, id: req.params.id } };
-
-        const entries = (await find(filters)) || null;
+        const entries = await find(req.params, filters, 'news');
         if (entries) {
             return res.status(200).send({
                 success: true,
-                data:  entries ,
+                data: entries,
             });
         }
         return res.status(401).send({
@@ -52,7 +56,7 @@ module.exports.deleteOne = async (req, res, next) => {
         if (result) {
             return res.status(200).send({
                 success: true,
-                data: result
+                data: result,
             });
         }
         return res.status(401).send({

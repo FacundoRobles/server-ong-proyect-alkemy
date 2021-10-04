@@ -1,7 +1,7 @@
 'use strict';
 const { times,concat } = require('lodash')
 
-const usersAdmin = times(10, (i) => ({
+const userAdmin = times(10, (i) => ({
   firstName:`User${i}`,
   lastName: 'Rich',
   email: `test${i}@test.com`,
@@ -13,15 +13,6 @@ const usersAdmin = times(10, (i) => ({
 }));
 
 const userStandard = times(10, (i) => ({
-  firstName: `User ${i + 10}`,
-  lastName: 'Demo',
-  deleted: false,
-  createdAt: new Date(),
-  updatedAt: new Date(),
-}));
-
-
-const usersStandard = times(10, (i) => ({
   firstName:`User${i + 10}`,
   lastName: 'Rich',
   email: `test${i + 10}@test.com`,
@@ -33,7 +24,7 @@ const usersStandard = times(10, (i) => ({
   updatedAt: new Date(),
 }));
 
-let users = concat(usersAdmin,usersStandard)
+let users = concat(userAdmin,userStandard)
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {

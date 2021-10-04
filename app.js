@@ -7,7 +7,9 @@ const cors = require('cors')
 require('dotenv').config()
 
 const indexRouter = require('./routes/index');
+
 const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 
 const newsRouter = require('./routes/news');
 
@@ -33,6 +35,7 @@ app.use('/news', newsRouter);
 app.use('/categories', categoriesRouter);
 app.use('/testimonials', testimonialsRouter);
 app.use('/contacts', contactsRouter);
+app.use('/auth', authRouter)
 
 app.use(function(req, res, next) {
   next(createError(404));

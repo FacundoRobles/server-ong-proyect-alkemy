@@ -13,16 +13,34 @@ const createMember = async (name, image) => {
         .then(member => member)
 }
 
- const updateMember = async (idMember, name, image) => {
+const updateMember = async (idMember, name, image) => {
     return await Member.findByPk(idMember)
         .then(async (member) => {
             if (member !== null) {
                 await Member.update({
                     name,
                     image
-                },{
+                }, {
                     where: {
-                       id: idMember
+                        id: idMember
+                    }
+                })
+                return member
+            }
+            return
+        })
+}
+
+const deleteMember = async (idMember) => {
+    return await Member.findByPk(idMember)
+        .then(async (member) => {
+            if (member !== null) {
+                await Member.update({
+                    deleted: true,
+                    deletedAt: new Date()
+                }, {
+                    where: {
+                        id: idMember
                     }
                 })
                 return member
@@ -34,5 +52,6 @@ const createMember = async (name, image) => {
 module.exports = {
     allMembers,
     createMember,
-    updateMember
+    updateMember,
+    deleteMember
 }

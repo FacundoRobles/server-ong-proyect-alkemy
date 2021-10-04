@@ -1,9 +1,20 @@
 const express = require('express');
 const router = express.Router();
 
-const { getMembers, newMember, updateOne } = require('../controllers/memberController');
+const { getMembers, newMember, updateOne, deleteOne } = require('../controllers/memberController');
 
 router.get('/', (req, res, next) => {
+<<<<<<< HEAD
+    getMembers()
+        .then(members => res.status(201).send({
+            success: true,
+            data: members,
+        }))
+        .catch(err => res.status(401).send({
+            success: false,
+            data: err.message
+        }))
+=======
 <<<<<<< HEAD
     getMembers()
         .then(members => res.status(201).json(members))
@@ -14,6 +25,7 @@ router.get('/', (req, res, next) => {
     .then(members => res.status(201).json(members))
     .catch(err => res.status(401).send(err.message))
 >>>>>>> 5114d5db81519788c8d0297e5866ba4fde6801a3
+>>>>>>> 2c3031adc7aec8a243c8d6947bbd43349da93cc8
 });
 
 router.post('/', (req, res, next) => {
@@ -22,25 +34,50 @@ router.post('/', (req, res, next) => {
     newMember(name, image)
         .then(member => {
             if (typeof (member) !== 'string') {
-                return res.status(201).json(member)
+                return res.status(201).send({
+                    success: true,
+                    data:`member ${name} has created`
+                })
             }
-            res.status(401).send(member)
+            res.status(401).send({
+                success: false,
+                data: `sorry can't create ${name}`,
+            })
         })
 });
 
- router.put('/:idMember', (req, res, next) => {
+router.put('/:idMember', (req, res, next) => {
     const { idMember } = req.params
     const { name, image } = req.body
 
-    updateOne(idMember, name, image)
-        .then(updated => {
-            console.log(updated)
-            if (updated) {
-                return res.status(201).json(`member ${idMember} modified`)
-            }})
-        .catch (err => res.status(401).send(`sorry dont finded member ${idMember}`)) 
+    if (name) {
+        return updateOne(idMember, name, image)
+            .then(updated => {
+                if (updated) {
+                    return res.status(201).send({
+                        success: true,
+                        data: `member ${idMember} has modified to ${name}`
+                    })
+                }
+            })
+            .catch(err => res.status(401).send({
+                success: false,
+                data: `sorry dont finded member ${idMember}` 
+            }))
+    }
+    return deleteOne(idMember)
+        .then(deleted => {
+            if (deleted) {
+                return res.status(201).json({
+                    success: true,
+                    data: `member ${idMember} has deleted`,
+                })
+            }
+        })
+        .catch(err => res.status(401).send({
+            success: false,
+            data: `sorry dont finded member ${idMember}`, 
+        }))
 })
-
-
 
 module.exports = router;

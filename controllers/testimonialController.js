@@ -29,7 +29,7 @@ module.exports = {
             const testimonialToDelete = await testimonial.fetchOne(req.params.id);
             if (testimonialToDelete) {
                 const deletedTestimonial = await testimonial.delete(testimonialToDelete);
-                return res.status(204).send({
+                return res.status(200).send({
                     success: true,
                     data: {
                         testimonials: deletedTestimonial
@@ -79,8 +79,9 @@ module.exports = {
         try {
             const testimonialToUpdate = await testimonial.fetchOne(req.params.id);
             if (testimonialToUpdate) {
-                const updatedTestimonial = await testimonial.update(req.body, testimonialToUpdate);
-                return res.status(204).send({
+                await testimonial.update(req.body, testimonialToUpdate);
+                const updatedTestimonial = await testimonial.fetchOne(req.params.id);
+                return res.status(201).send({
                     success: true,
                     data: {
                         testimonials: updatedTestimonial

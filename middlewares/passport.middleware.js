@@ -52,7 +52,7 @@ var opts = {};
 passport.use(new JwtStrategy(opts, async(jwt_payload, done) => {
     return await User.findByPk(jwt_payload.user.id)
     .then(user => {
-        if (user) return done(null, user);
+        if (user?.roleId === 1) return done(null, user);
     
         return done(null, false);
     })

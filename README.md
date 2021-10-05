@@ -26,3 +26,14 @@ npx sequelize-cli db:seed:all
 ``` bash
 npm start
 ```
+## Users created in seed to use test
+
+```Admin
+
+email: test1@test.com
+password: User2021.L1
+
+```Standard
+
+email: test2@test.com
+password: User2.L2021

@@ -1,19 +1,57 @@
 const { Member } = require('../models/index')
 
 const allMembers = async () => {
-    return await Member.findAll({raw: true})
-    .then(members => members)
+    return await Member.findAll({ raw: true })
+        .then(members => members)
 }
 
-const createMember = async (name,imagen) => {
+const createMember = async (name, image) => {
     return await Member.create({
         name,
-        imagen
+        image
     })
-    .then(member => member)
+        .then(member => member)
+}
+
+const updateMember = async (idMember, name, image) => {
+    return await Member.findByPk(idMember)
+        .then(async (member) => {
+            if (member !== null) {
+                await Member.update({
+                    name,
+                    image
+                }, {
+                    where: {
+                        id: idMember
+                    }
+                })
+                return member
+            }
+            return
+        })
+}
+
+const deleteMember = async (idMember) => {
+    return await Member.findByPk(idMember)
+        .then(async (member) => {
+            if (member !== null) {
+                await Member.update({
+                    deleted: true,
+                    deletedAt: new Date()
+                }, {
+                    where: {
+                        id: idMember
+                    }
+                })
+                return member
+            }
+            return
+        })
 }
 
 module.exports = {
     allMembers,
-    createMember
+    createMember,
+    updateMember,
+    deleteMember
 }

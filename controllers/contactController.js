@@ -55,8 +55,9 @@ module.exports = {
         try {
             const contactToUpdate = await contact.fetchOne(req.params.id);
             if (contactToUpdate) {
-                const updatedContact = await contact.update(req.body, contactToUpdate);
-                return res.status(204).send({
+                 await contact.update(req.body, contactToUpdate);
+                 const updatedContact = await contact.fetchOne(req.params.id);
+                return res.status(201).send({
                     success: true,
                     data: {
                         contacts: updatedContact
@@ -82,7 +83,7 @@ module.exports = {
             const contactToDelete = await contact.fetchOne(req.params.id);
             if (contactToDelete) {
                 const deletedContact = await contact.delete(contactToDelete);
-                return res.status(204).send({
+                return res.status(200).send({
                     success: true,
                     data: {
                         contacts: deletedContact

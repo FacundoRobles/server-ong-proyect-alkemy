@@ -33,20 +33,9 @@ module.exports.find = async ({ id }, filters, type) => {
     }
 };
 
-module.exports.deleteOne = async ({ id }) => {
+module.exports.deleteOne = async (entryToDelete) => {
     try {
-        const entry = await Entry.findByPk(id);
-        if (entry) {
-            await Entry.update(
-                {
-                    deletedAt: new Date(),
-                    deleted: true,
-                },
-                { where: { id } }
-            );
-        }
-        entry.deleted = true;
-        return entry;
+        return await entryToDelete.destroy();
     } catch (err) {
         throw Error({ success: false, data: err });
     }

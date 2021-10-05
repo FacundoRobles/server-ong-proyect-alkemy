@@ -1,4 +1,4 @@
-const { allCategories,createCategory,updateCategory }  = require('../services/categoryServices')
+const { allCategories,createCategory,updateCategory, deleteCategory }  = require('../services/categoryServices')
 const { isEmpty, isString } = require('lodash')
 
 module.exports = {
@@ -19,5 +19,8 @@ module.exports = {
                return category
            }
        })
+    },
+    deleteOne : async(idCategory) => {
+        return await deleteCategory(idCategory);
     }
 }

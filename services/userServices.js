@@ -14,14 +14,7 @@ const findOneUser = async(idUser) => {
 };
 
 const logicalDeleteUserService = async(idUser) => {
-    return await User.update({
-        deleted: true,
-        deletedAt: new Date()
-    },{
-        where:{
-            id: idUser
-        }
-    });
+    return await User.destroy(idUser);
 };
 
 

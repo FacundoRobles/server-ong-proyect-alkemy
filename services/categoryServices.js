@@ -14,7 +14,7 @@ const createCategory = async (name,description) => {
     .then(category => category)
 }
 
-const updateCategory = async (idCategory,fields) => {
+const updateCategory = async (idCategory, fields) => {
 
     return await Category.findByPk(idCategory)
     .then(async(category) => {
@@ -31,25 +31,17 @@ const updateCategory = async (idCategory,fields) => {
                 })
                 return category 
             }
-            
-            if(isBoolean(fields.first)){
-                await Category.update({
-                    deleted: fields.first,
-                    deletedAt: new Date()
-                },{
-                    where:{
-                        id: idCategory
-                    }
-                })
-                return category 
-            }
         }
         return 
     })
+}
+const deleteCategory = async (idCategory) => {
+    return await Category.destroy(idCategory);
 }
 
 module.exports = {
     allCategories,
     createCategory,
-    updateCategory
+    updateCategory,
+    deleteCategory
 }

@@ -14,16 +14,8 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
-      deleted: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
-      },
       deletedAt: {
         type: Sequelize.DATE
-      },
-      deleted: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
       },
       createdAt: {
         allowNull: false,

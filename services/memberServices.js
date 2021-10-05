@@ -1,4 +1,4 @@
-const { Member } = require('../models/index')
+const { Member } = require('../models/index');
 
 const allMembers = async () => {
     return await Member.findAll({raw: true})
@@ -13,7 +13,28 @@ const createMember = async (name,imagen) => {
     .then(member => member)
 }
 
+const updateMemberService = async(idMember,name,image) => {
+    return await Member.findByPk(idMember)
+        .then(async(member) => {
+            await Member.update({
+                name,
+                image
+            },{
+                where:{
+                    id: idMember
+                }
+            })
+            return member
+        })
+}
+
+const deletedMemberService = async (idMember) => {
+    return await Member.findByPk(idMember)
+}
+
 module.exports = {
     allMembers,
-    createMember
+    createMember,
+    deletedMemberService,
+    updateMemberService
 }

@@ -14,4 +14,16 @@ module.exports.saveActivity = async ({ id }, body) => {
         return body;
 };
 
+module.exports.findActivityServices = async (id) => {
+    return await Activity.findByPk(id);
+}
+
+module.exports.findAllActivities = async () => {
+    return await Activity.findAll();
+}
+
+module.exports.deleteActivityServices = async (activityToDelete) => {
+    return await activityToDelete.destroy();
+}
+
 

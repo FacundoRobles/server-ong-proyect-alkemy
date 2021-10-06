@@ -3,8 +3,9 @@ const router = express.Router();
 
 const { getUsers,validateUserDb,logicalDeleteUser } = require('../controllers/userController');
 const { validationResult } = require('express-validator');
+const { passport } = require('../middlewares/passport.middleware')
 
-router.get('/', (req, res, next) => {
+router.get('/',passport.authenticate('jwt', { session: false }), (req, res, next) => {
 
     getUsers()
     .then(users => res.status(201).send({
@@ -17,7 +18,7 @@ router.get('/', (req, res, next) => {
     }))
 });
 
-router.put('/:idUser', validateUserDb,(req, res, next) => {
+router.delete('/:idUser', validateUserDb,(req, res, next) => {
   const { idUser } = req.params;
 
   const errors = validationResult(req);

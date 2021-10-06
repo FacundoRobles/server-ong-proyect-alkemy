@@ -1,5 +1,5 @@
 const { Category }  = require('../models/index')
-const { isEmpty, isString, isBoolean } = require('lodash')
+const { isEmpty, isString } = require('lodash')
 
 const allCategories = async () => {
     return await Category.findAll({raw: true})
@@ -14,28 +14,14 @@ const createCategory = async (name,description) => {
     .then(category => category)
 }
 
-const updateCategory = async (idCategory,fields) => {
-
+const updateCategory = async (idCategory, name, description) => {
     return await Category.findByPk(idCategory)
     .then(async(category) => {
-
         if(!isEmpty(category)){
-            if(isString(fields.first)){
+            if(isString(name)){
                 await Category.update({
-                    name: fields.first,
-                    description: fields.second
-                },{
-                    where:{
-                        id: idCategory
-                    }
-                })
-                return category 
-            }
-            
-            if(isBoolean(fields.first)){
-                await Category.update({
-                    deleted: fields.first,
-                    deletedAt: new Date()
+                    name,
+                    description
                 },{
                     where:{
                         id: idCategory
@@ -47,9 +33,20 @@ const updateCategory = async (idCategory,fields) => {
         return 
     })
 }
+const deleteCategory = async (idCategory) => {
+    return await Category.findByPk(idCategory)
+    .then(category => {
+        if(category){
+            category.destroy()
+            return category
+        }
+        return category
+    })
+}
 
 module.exports = {
     allCategories,
     createCategory,
-    updateCategory
+    updateCategory,
+    deleteCategory
 }

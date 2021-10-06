@@ -1,4 +1,4 @@
-const { allCategories,createCategory,updateCategory }  = require('../services/categoryServices')
+const { allCategories,createCategory,updateCategory, deleteCategory }  = require('../services/categoryServices')
 const { isEmpty, isString } = require('lodash')
 
 module.exports = {
@@ -12,12 +12,12 @@ module.exports = {
             .then(created => created)
         }
     },
-    updateOne : async(idCategory,fields) => {
-       return await updateCategory(idCategory,fields)
-       .then(category => {
-           if(category){
-               return category
-           }
-       })
+    updateOne : async(idCategory,name,description) => {
+        if(!isEmpty(name) && isString(name)){ 
+            return await updateCategory(idCategory,name,description)
+        }
+    },
+    deleteOne : async(idCategory) => {
+        return await deleteCategory(idCategory);
     }
 }

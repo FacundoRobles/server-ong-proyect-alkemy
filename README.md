@@ -33,7 +33,13 @@ npm start
 email: test1@test.com
 password: User2021.L1
 
+email: test3@test.com
+password: User2021.L3
+
 ```Standard
 
-email: test2@test.com
-password: User2.L2021
+email: test12@test.com
+password: User12.L2021
+
+email: test14@test.com
+password: User14.L2021

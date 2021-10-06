@@ -7,7 +7,7 @@ module.exports.saveOne = async ({ id }, object) => {
     if (isEmpty(id)) {
         return await Entry.create(object);
     }
-    const entry = await Entry.findOne({ where: { id, deleted: false } });
+    const entry = await Entry.findOne({ where: { id } });
     if (!entry) {
         throw Error();
     }
@@ -20,33 +20,22 @@ module.exports.find = async ({ id }, filters, type) => {
     try {
         if (id) {
             return await Entry.findOne({
-                where: { id, deleted: false, type },
+                where: { id, type },
             });
         }
 
         return await Entry.findAll({
             ...filters,
-            where: { deleted: false, type },
+            where: { type },
         });
     } catch (err) {
         throw Error({ success: false, data: err });
     }
 };
 
-module.exports.deleteOne = async ({ id }) => {
+module.exports.deleteOne = async (entryToDelete) => {
     try {
-        const entry = await Entry.findByPk(id);
-        if (entry) {
-            await Entry.update(
-                {
-                    deletedAt: new Date(),
-                    deleted: true,
-                },
-                { where: { id } }
-            );
-        }
-        entry.deleted = true;
-        return entry;
+        return await entryToDelete.destroy();
     } catch (err) {
         throw Error({ success: false, data: err });
     }

@@ -1,4 +1,5 @@
-const { allMembers, createMember, updateMember, deleteMember } = require('../services/memberServices')
+const { allMembers,createMember,updateMemberService,deletedMemberService } = require('../services/memberServices')
+const { isEmpty,isString } = require('lodash')
 
 module.exports = {
     getMembers: async () => {
@@ -7,28 +8,20 @@ module.exports = {
     },
 
     newMember: async (name, image) => {
-        if (name && typeof (name) === 'string') {
+        if (!isEmpty(name) && isString(name)) {
             return await createMember(name, image)
                 .then(created => created)
         }
     },
 
-    updateOne: async (idMember, name, image) => {
-        return await updateMember(idMember, name, image)
-            .then(member => {
-                if (member) {
-                    return member
-                }
-            })
+    updateMemberController : async (idMember,name,image) => {
+        if(!isEmpty(name) && isString(name)){
+            return await updateMemberService(idMember,name,image)
+        }
     },
 
-    deleteOne: async (idMember) => {
-        return await deleteMember(idMember)
-            .then(member => {
-                if (member) {
-                    return member
-                }
-            })
+    deleteMemberController : async (idMember) => {
+        return await deletedMemberService(idMember)
     }
 
 }

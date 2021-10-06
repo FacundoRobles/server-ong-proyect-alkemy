@@ -69,15 +69,13 @@ module.exports = (sequelize, DataTypes) => {
           facebook: DataTypes.STRING,
           linkedin: DataTypes.STRING,
           instagram: DataTypes.STRING,
-          deletedAt: DataTypes.DATE,
-          deleted: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false
-        }
+          deletedAt: DataTypes.DATE
         },
         {
             sequelize,
             modelName: 'Organization',
+            paranoid: true,
+            timestamps: true
         }
     );
     return Organization;

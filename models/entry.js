@@ -69,14 +69,12 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    deletedAt: DataTypes.DATE,
-    deleted: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
-    }
+    deletedAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Entry',
+    paranoid: true,
+    timestamps: true
   });
   return Entry;
 };

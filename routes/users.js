@@ -17,7 +17,7 @@ router.get('/', (req, res, next) => {
     }))
 });
 
-router.put('/:idUser', validateUserDb,(req, res, next) => {
+router.delete('/:idUser', validateUserDb,(req, res, next) => {
   const { idUser } = req.params;
 
   const errors = validationResult(req);

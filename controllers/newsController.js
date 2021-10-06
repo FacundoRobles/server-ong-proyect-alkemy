@@ -52,7 +52,11 @@ module.exports.fetchNews = async (req, res, next) => {
 
 module.exports.deleteOne = async (req, res, next) => {
     try {
-        const result = await deleteOne(req.params);
+        let filters = {
+            attributes: ['name', 'image', 'createdAt']
+        };
+        const entryToDelete = await find(req.params, filters, 'news');
+        const result = await deleteOne(entryToDelete);
         if (result) {
             return res.status(200).send({
                 success: true,

@@ -4,7 +4,6 @@ const { times } = require('lodash')
 const categories = times(3, (i) => ({
   name: `category ${i}`,
   description: 'this is a description',
-  deleted: false,
   createdAt: new Date(),
   updatedAt: new Date(),
 }));

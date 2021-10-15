@@ -4,7 +4,7 @@ const { SENDGRID_API_KEY, SENDGRID_SENDER, NODE_ENV } = process.env;
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(SENDGRID_API_KEY)
 
-const welcomeMail = async (email, firstName) =>{
+module.exports.welcomeMail = async (email, firstName) =>{
     let msg = {
       to: email,
       from: {
@@ -38,3 +38,4 @@ const welcomeMail = async (email, firstName) =>{
         throw Error({success: false, data: error})
       })
 };
+

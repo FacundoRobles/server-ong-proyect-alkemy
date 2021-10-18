@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { newUser,validationUserFields,validationLoginFields } = require('../controllers/authController');
 const { validationResult } = require('express-validator');
-
+const  { getTemplate: sendMail } = require('../services/mailingServices');
 const { passport,messageError } = require('../middlewares/passport.middleware');
 const jwt = require('jsonwebtoken');
 
@@ -26,10 +26,12 @@ router.post('/register',validationUserFields,(req, res, next) => {
     }
 
     newUser(userData)
-    .then(user => res.status(201).send({
+    .then(user => {
+      sendMail(email, firstName, 'welcome');
+      return res.status(201).send({
         success: true,
         data: user
-    }))
+    })})
     .catch(err => res.status(401).send({
         success: false,
         data: err.message

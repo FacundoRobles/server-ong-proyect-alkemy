@@ -35,7 +35,7 @@ module.exports = {
         .not().isEmpty()
         .isLength({ min: 6 })
         .withMessage('must be at least 6 chars long')
-        .matches(/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{6,16}$/)
+        .matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,25}$/)
         .withMessage('at least one digit, at least one lowercase, and at least one uppercase. It may have other symbols')
     ],
     validationLoginFields: [

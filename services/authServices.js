@@ -7,7 +7,7 @@ const createUser = async(info) => {
         lastName: info.lastName,
         image: info.image,
         password: info.password,
-        roleId: 1
+        roleId: 2
     })
 }
 

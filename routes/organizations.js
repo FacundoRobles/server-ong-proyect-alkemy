@@ -2,9 +2,12 @@
 
 const express = require('express');
 const router = express.Router();
-const { fetchOrganization } = require('../controllers/organizationsController');
+const { fetchOrganization, fetchAllOrganization } = require('../controllers/organizationsController');
 
-router.route('/:id/public')
+router.route('/')
+      .get(fetchAllOrganization);
+
+router.route('/:idOrganization')
       .get(fetchOrganization);
       
 module.exports = router;

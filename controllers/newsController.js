@@ -31,7 +31,7 @@ module.exports.saveOne = async (req, res, next) => {
 module.exports.fetchNews = async (req, res, next) => {
     try {
         let filters = {
-            attributes: ['name', 'image', 'createdAt']
+            attributes: ['id','name', 'image', 'createdAt']
         };
 
         const entries = await find(req.params, filters, 'news');

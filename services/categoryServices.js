@@ -6,6 +6,11 @@ const allCategories = async () => {
     .then(categories => categories)
 }
 
+const oneCategory = async (id) => {
+    return await Category.findByPk(id)
+    .then(category => category)
+}
+
 const createCategory = async (name,description) => {
     return await Category.create({
         name,
@@ -48,5 +53,6 @@ module.exports = {
     allCategories,
     createCategory,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    oneCategory
 }

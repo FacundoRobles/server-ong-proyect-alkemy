@@ -1,13 +1,25 @@
 const express = require('express');
 const router = express.Router();
 
-const { getCategories,newCategory,updateOne,deleteOne } = require('../controllers/categoryController')
+const { getCategories,newCategory,updateOne,deleteOne, getCategory } = require('../controllers/categoryController')
 
 router.get('/', (req, res, next) => {
     getCategories()
     .then(categories => res.status(201).send({
         success: true,
         data: categories
+    }))
+    .catch(err => res.status(401).send({
+        success: false,
+        data: err.message
+    }))
+});
+
+router.get('/:id', (req, res, next) => {
+    getCategory(req.params.id)
+    .then(category => res.status(201).send({
+        success: true,
+        data: category
     }))
     .catch(err => res.status(401).send({
         success: false,

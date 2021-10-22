@@ -2,12 +2,15 @@
 
 const express = require('express');
 const router = express.Router();
-const { fetchOrganization, fetchAllOrganization } = require('../controllers/organizationsController');
+const { fetchOrganization, fetchAllOrganization, updateOrganizationController, deletedOrganizationController, createOrganizationController } = require('../controllers/organizationsController');
 
 router.route('/')
-      .get(fetchAllOrganization);
+      .get(fetchAllOrganization)
+      .post(createOrganizationController);
 
 router.route('/:idOrganization')
-      .get(fetchOrganization);
+      .get(fetchOrganization)
+      .put(updateOrganizationController)
+      .delete(deletedOrganizationController);
       
 module.exports = router;

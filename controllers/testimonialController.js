@@ -76,6 +76,7 @@ module.exports = {
         }
     },
     async updateTestimonial(req, res) {
+        console.log(req.body)
         try {
             const testimonialToUpdate = await testimonial.fetchOne(req.params.id);
             if (testimonialToUpdate) {

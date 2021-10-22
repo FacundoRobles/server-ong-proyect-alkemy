@@ -76,9 +76,21 @@ router.post('/login',validationLoginFields,(req, res, next) => {
 
 router.get('/me', passport.authenticate('jwt', { session: false }),(req, res, next) => {
 
+  let user = {
+    id: req.user.id,
+    firstName: req.user.firstName,
+    lastName: req.user.lastName,
+    email: req.user.email,
+    image: req.user.image,
+    roleId: req.user.roleId,
+    deletedAt: req.user.deletedAt,
+    createdAt: req.user.createdAt,
+    updatedAt: req.user.updatedAt
+  }
+  
     res.status(201).send({
       success: true,
-      data: req.user
+      data: user
     })
 })
 

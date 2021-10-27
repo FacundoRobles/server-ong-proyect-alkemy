@@ -2,73 +2,38 @@
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
     class Organization extends Model {
-        static associate(models) {}
+        static associate(models) {
+          Organization.hasMany(models.Slide, {
+            foreignKey: 'organizationId',
+            as: 'items'
+          })
+        }
     }
-    Organization.init(
-        {   
+    Organization.init({   
           name: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-              notNull: {
-                msg: 'Please enter the Organization name'
-              },
-              notEmpty: {
-                msg: 'Please enter the Organization name'
-              }
-            }
+            allowNull: false
           },
           image: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-              notNull: {
-                msg: 'Please enter the image URL'
-              },
-              notEmpty: {
-                msg: 'Please enter the image URL'
-              }
-            }
+            allowNull: false
           },
           phone: {
             type: DataTypes.INTEGER,
-            allowNull: false,
-            validate: {
-              notNull: {
-                msg: 'Please enter the Organization phone'
-              },
-              notEmpty: {
-                msg: 'Please enter the Organization phone'
-              }
-            }
+            allowNull: false
           },
           address: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-              notNull: {
-                msg: 'Please enter the Organization address'
-              },
-              notEmpty: {
-                msg: 'Please enter the Organization address'
-              }
-            }
+            allowNull: false
           },
           welcomeText: {
             type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-              notNull: {
-                msg: 'Please enter the Organization welcome text'
-              },
-              notEmpty: {
-                msg: 'Please enter the Organization welcome text'
-              }
-            }
+            allowNull: false
           },
-          facebook: DataTypes.STRING,
-          linkedin: DataTypes.STRING,
-          instagram: DataTypes.STRING,
+          socialNetworks: {
+            type: DataTypes.JSON,
+            allowNull: false
+          },
           deletedAt: DataTypes.DATE
         },
         {
@@ -77,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
             paranoid: true,
             timestamps: true
         }
+        
     );
     return Organization;
 };

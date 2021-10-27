@@ -7,11 +7,14 @@ const organizations = times(5,(i) =>({
   phone: 155678942 + i,
   address:`Dorrego 1${i}43`,
   welcomeText: `Welcome to Organization${i+1}`,
-  facebook: `www.facebook.com/organization${i+1}`,
-  linkedin: `www.linkedin.com/organization${i+1}`,
-  instagram: `www.instragram.com/organization${i+1}`,
+  socialNetworks: JSON.stringify({
+    facebook: `www.facebook.com/organization${i+1}`,
+    linkedin: `www.linkedin.com/organization${i+1}`,
+    instagram: `www.instragram.com/organization${i+1}`
+  }),
   createdAt: new Date(),
   updatedAt: new Date(),
+  deletedAt: null
 }))
 
 module.exports = {

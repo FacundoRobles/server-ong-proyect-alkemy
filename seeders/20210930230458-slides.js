@@ -1,13 +1,14 @@
 'use strict';
 const { times } = require("lodash");
 
-const slides = times(5,(i) =>({
-  imageUrl: `www.image${i+1}.com`,
-  text:'image from organization',
+const slides = times(3,(i) =>({
+  imageUrl: `https://picsum.photos/200?random=${i}`,
+  text: `image from organization${i}`,
   order:i+1,
   organizationId: 1,
   createdAt: new Date,
-  updatedAt: new Date
+  updatedAt: new Date,
+  deletedAt: null
 }))
 module.exports = {
   up: async (queryInterface, Sequelize) => {

@@ -9,6 +9,17 @@ const allUsers = async() => {
     }
 };
 
+const updateUser = async ( id , object) => {
+    const user = await User.findOne({ where: { id } });
+    if (!user) {
+        throw Error();
+    }
+
+    await User.update({ ...object, updateAt: new Date() }, { where: { id } });
+    return object;
+};
+
+
 const findOneUser = async(idUser) => {
     return await User.findByPk(idUser);
 };
@@ -27,6 +38,7 @@ const logicalDeleteUserService = async(idUser) => {
 
 module.exports = {
     allUsers,
+    updateUser,
     findOneUser,
     logicalDeleteUserService
 }

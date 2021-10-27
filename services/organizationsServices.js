@@ -1,13 +1,23 @@
 'use strict';
-const {isEmpty} = require('lodash')
-const { Organization } = require('../models/index');
+const {isEmpty, forEach} = require('lodash')
+const { Organization, Slide } = require('../models/index');
 
 module.exports.find = async (idOrganization) => {
     try {
         if (idOrganization) {
-            return await Organization.findByPk(idOrganization)
+            return await Organization.findByPk(idOrganization,{
+                attributes: ["id","name","image","phone","address","welcomeText", "socialNetworks"],
+                include: [{
+                    model: Slide,
+                    as: 'items',
+                    attributes: {
+                        exclude: ['createdAt', 'updatedAt', 'id']
+                    }
+                }]
+            })
         }
     } catch (err) {
+        console.log(err)
         throw Error({ success: false, data: err });
     }
 };
@@ -20,16 +30,35 @@ module.exports.getAll = async () => {
     }
 };
 
-module.exports.updateOrganizationService = async(idOrganization,name,image) => {
+module.exports.updateOrganizationService = async(idOrganization, welcomeText, items) => {
     return await Organization.findByPk(idOrganization)
     .then(async(organization) => {
         await Organization.update({
-            name,
-            image
+            welcomeText
         },{
             where:{
                 id: idOrganization
             }
+        })
+        .then(async () => {
+            await Slide.findAll({
+                where: {
+                    organizationId: idOrganization
+                }
+            })
+            .then((slides) => {
+                forEach(slides, async (value, index) => {
+                    await Slide.update({
+                        imageUrl: items[index].imageUrl,
+                        text: items[index].text
+                    },{
+                        where:{
+                            order: index + 1 
+                        }
+                    })
+                })
+
+            })
         })
         return organization
     })

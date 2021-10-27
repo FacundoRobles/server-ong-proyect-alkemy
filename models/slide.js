@@ -5,59 +5,35 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Slide extends Model {
     static associate(models) {
-      Slide.belongsTo(models.Organization, {as: 'organization'});
-
+      Slide.belongsTo(models.Organization, {
+        foreignKey: 'organizationId'
+      });
     }
   };
   Slide.init({
     imageUrl: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Please enter the image URL'
-        },
-        notEmpty: {
-          msg: 'Please enter the image URL'
-        }
-      }
+      allowNull: false
     },
     text: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Please enter some text'
-        },
-        notEmpty: {
-          msg: 'Please enter some text'
-        }
-      }
+      allowNull: false
     },
     order: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Order must be setted'
-        },
-        notEmpty: {
-          msg: 'Order must be setted'
-        }
-      }
+      allowNull: false
     },
     organizationId: {
-      type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        notNull: {
-          msg: 'Organization must be setted'
-        },
-        notEmpty: {
-          msg: 'Organization must be setted'
-        }
-      }
+      onDelete: 'NO ACTION',
+      onUpdate: 'CASCADE',
+      references: {
+        model: 'Organizations',
+        key: 'id',
+      },
+      type: DataTypes.INTEGER,
     },
+    deletedAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Slide',

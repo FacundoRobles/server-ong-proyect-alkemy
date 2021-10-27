@@ -4,23 +4,12 @@ const { find, getAll, updateOrganizationService, deletedOrganizationService, cre
 module.exports.fetchOrganization = async (req, res, next) => {
     const {idOrganization} = req.params
     try {
-        const organization = (await find(idOrganization));
+        const organization = (await find(idOrganization))
+        
         if (organization) {
-            const filters = {
-                name: organization.dataValues.name,
-                image: organization.dataValues.image,
-                phone: organization.dataValues.phone,
-                address: organization.dataValues.address,
-                welcomText: organization.dataValues.welcomText,
-                socialNetworks: {
-                    facebook: organization.dataValues.facebook,
-                    linkedin: organization.dataValues.linkedin,
-                    instagram: organization.dataValues.instagram
-                }
-            }
             return res.status(200).json({
                 success: true,
-                data: filters
+                data: organization
             });
         }
         return res.status(401).send({
@@ -28,6 +17,7 @@ module.exports.fetchOrganization = async (req, res, next) => {
             message: 'Organization not Found',
         });
     } catch (err) {
+        console.log("ERROR", JSON.stringify(err))
         next(err);
     }
 };
@@ -52,13 +42,15 @@ module.exports.fetchAllOrganization = async (req, res, next) => {
 
 module.exports.updateOrganizationController = async (req, res, next) => {
     const {idOrganization} = req.params;
-    const {name,image} = req.body;
+    const {welcomeText, items} = req.body;
+
     try {
-        const organization = (await updateOrganizationService(idOrganization,name,image));
+        const organization = (await updateOrganizationService(idOrganization, welcomeText, items));
         if (organization) {
+            const updated = (await find(idOrganization))
             return res.status(200).json({
                 success: true,
-                data: organization
+                data: updated
             });
         }
         return res.status(401).send({

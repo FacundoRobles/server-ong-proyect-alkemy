@@ -4,7 +4,7 @@ const { times } = require("lodash");
 const entries = times(5,(i) =>({
   name: `Novedad${i}`,
   content: `semilla ${i}`,
-  image: `www.image${i}.com`,
+  image: `https://picsum.photos/200?random=${i}`,
   categoryId: 1,
   type: 'news',
   createdAt: new Date,
@@ -17,6 +17,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    
+    await queryInterface.bulkDelete('Entries', null, {});
   }
 };

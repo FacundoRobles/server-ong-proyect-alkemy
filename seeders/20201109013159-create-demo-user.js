@@ -15,7 +15,7 @@ let createUsers = async() => {
         email: `test${i}@test.com`,
         password: await hashed(`User2021.L${i}`),
         roleId: 1,
-        image: 'https://www.designevo.com/res/templates/thumb_small/colorful-hand-and-warm-community.png',
+        image: `https://picsum.photos/200?random=${i}`,
         createdAt: new Date(),
         updatedAt: new Date(), 
     }
@@ -26,9 +26,9 @@ let createUsers = async() => {
         firstName:`User${i+10}`,
         lastName: `Rich${i+10}`,
         email: `test${i+10}@test.com`,
-        password: await hashed(`User${i}.L2021`),
+        password: await hashed(`User${i+10}.L2021`),
         roleId: 2,
-        image: 'https://www.designevo.com/res/templates/thumb_small/colorful-hand-and-warm-community.png',
+        image: `https://picsum.photos/200?random=${i+10}`,
         createdAt: new Date(),
         updatedAt: new Date(), 
     }
@@ -44,6 +44,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-   
+    await queryInterface.bulkDelete('Users', null, {});
   }
 };

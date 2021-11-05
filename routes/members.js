@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const {get} = require('lodash');
 
 const { getMembers,newMember,deleteMemberController,updateMemberController } = require('../controllers/memberController');
 
@@ -11,53 +12,61 @@ router.get('/', (req, res, next) => {
         }))
         .catch(err => res.status(401).send({
             success: false,
-            data: err.message
+            data: get(
+                err,
+                'errors[0].message',
+                'Could not insert that member'
+            ),
         }))
 });
 
-router.post('/', (req, res, next) => {
-    const { name, image } = req.body
-
-    newMember(name, image)
-        .then(member => {
-            if (typeof (member) !== 'string') {
-                return res.status(201).send({
+router.post('/', async (req, res, next) => {
+    try{
+        const { name, image } = req.body
+    
+        await newMember(name, image)
+            .then(val =>
+                res.status(201).send({
                     success: true,
-                    data:`member ${name} has created`
+                    data: val,
                 })
-            }
-            res.status(401).send({
-                success: false,
-                data: `sorry can't create ${name}`,
-            })
-        })
+            )
+            .catch(err =>
+                res.status(401).send({
+                    success: false,
+                    message: get(
+                        err,
+                        'errors[0].message',
+                        'Could not insert that member'
+                    ),
+                })
+            );
+    } catch(err) {
+        next(err);
+    }
 });
 
 router.put('/:idMember', (req, res, next) => {
     const { idMember } = req.params
     const {name, image} = req.body;
 
-    if(!name){
+    updateMemberController(idMember, name, image)
+    .then(val =>
+        res.status(201).send({
+            success: true,
+            data: val,
+        })
+    )
+    .catch(err =>
         res.status(401).send({
             success: false,
-            data: `complete the fields`
+            message: get(
+                err,
+                'errors[0].message',
+                'Could not update that member'
+            ),
         })
-    }
-
-    updateMemberController(idMember,name,image)
-    .then(member => {
-        if(member){
-            return res.status(201).send({
-                success: true,
-                data: `member ${idMember} updated`
-            })
-        }
-
-        res.status(401).send({
-            success: false,
-            data: `sorry dont finded member ${idMember}`
-        })
-    })
+    );
 });
 
 router.delete('/:idMember', (req, res, next) => {
@@ -68,13 +77,13 @@ router.delete('/:idMember', (req, res, next) => {
         if(member){
             return res.status(201).send({
                 success: true,
-                data: `member ${idMember} deleted`
+                data: member
             })
         }
 
         res.status(401).send({
             success: false,
-            data: `sorry dont finded member`
+            data: `Could not delete that member`
         });
     })
 });

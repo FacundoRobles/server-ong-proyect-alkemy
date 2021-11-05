@@ -1,27 +1,20 @@
-const { allMembers,createMember,updateMemberService,deletedMemberService } = require('../services/memberServices')
-const { isEmpty,isString } = require('lodash')
+const { allMembers,createMember,updateMemberService,deletedMemberService } = require('../services/memberServices');
 
 module.exports = {
     getMembers: async () => {
-        return await allMembers()
-            .then(members => members)
+        return await allMembers();
     },
 
     newMember: async (name, image) => {
-        if (!isEmpty(name) && isString(name)) {
-            return await createMember(name, image)
-                .then(created => created)
-        }
+        return await createMember(name, image)
     },
 
     updateMemberController : async (idMember,name,image) => {
-        if(!isEmpty(name) && isString(name)){
-            return await updateMemberService(idMember,name,image)
-        }
+            return await updateMemberService(idMember,name,image);
     },
 
     deleteMemberController : async (idMember) => {
-        return await deletedMemberService(idMember)
+        return await deletedMemberService(idMember);
     }
 
 }

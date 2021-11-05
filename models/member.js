@@ -9,8 +9,30 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Member.init({
-    name: DataTypes.STRING,
-    image: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please enter a name'
+        },
+        notEmpty: {
+          msg: 'Please enter a name'
+        }
+      }
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Please enter an image'
+        },
+        notEmpty: {
+          msg: 'Please enter an image'
+        }
+      }
+    },
     deletedAt: DataTypes.DATE,
     deleted: {
       type: DataTypes.BOOLEAN,

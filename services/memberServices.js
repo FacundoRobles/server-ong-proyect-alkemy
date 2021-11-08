@@ -14,18 +14,12 @@ const createMember = async (name, image) => {
 }
 
 const updateMemberService = async(idMember,name,image) => {
-    return await Member.findByPk(idMember)
-    .then(async(member) => {
-        await Member.update({
-            name,
-            image
-        },{
-            where:{
-                id: idMember
-            }
-        })
-        return member
-    })
+    const member = await Member.findByPk(idMember);
+    if (!member) {
+        throw Error();
+    }
+    await Member.update({name, image}, {where:{id: idMember}});
+    return member;
 }
 
 const deletedMemberService = async (idMember) => {
@@ -33,6 +27,7 @@ const deletedMemberService = async (idMember) => {
     .then(member => {
         if(member){
             member.destroy()
+            member.deleted = true;
             return member
         }
         return member

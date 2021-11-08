@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha ./tests/**/*news.js"
+    "test": "mocha ./tests/**/*.js"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.4.7",

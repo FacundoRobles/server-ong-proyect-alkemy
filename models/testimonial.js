@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
   Testimonial.init({
     name: DataTypes.STRING,
     image: DataTypes.STRING,
-    content: DataTypes.STRING,
+    content: DataTypes.STRING(1234),
     deletedAt: DataTypes.DATE
   }, {
     sequelize,

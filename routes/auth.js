@@ -63,9 +63,7 @@ router.post('/login',validationLoginFields,(req, res, next) => {
       req.logIn(user, {session: false}, (err) => {
         
         if (err) return next(err); 
-
-          const token = jwt.sign({ user }, SECRET_TOKEN, { expiresIn: '25m' })
-
+          const token = jwt.sign({ user }, SECRET_TOKEN);
         return res.status(201).send({
             success: true,
             data: token
@@ -76,16 +74,17 @@ router.post('/login',validationLoginFields,(req, res, next) => {
 
 router.get('/me', passport.authenticate('jwt', { session: false }),(req, res, next) => {
 
+  const {id,firstName,lastName,email,image,roleId,deletedAt,createdAt,updatedAt} = req.user
   let user = {
-    id: req.user.id,
-    firstName: req.user.firstName,
-    lastName: req.user.lastName,
-    email: req.user.email,
-    image: req.user.image,
-    roleId: req.user.roleId,
-    deletedAt: req.user.deletedAt,
-    createdAt: req.user.createdAt,
-    updatedAt: req.user.updatedAt
+    id,
+    firstName,
+    lastName,
+    email,
+    image,
+    roleId,
+    deletedAt,
+    createdAt,
+    updatedAt
   }
   
     res.status(201).send({
